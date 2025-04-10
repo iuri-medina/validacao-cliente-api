@@ -25,7 +25,7 @@ Este projeto é uma API REST desenvolvida com **Spring Boot**, projetada para **
 ### 1. Clonar o repositório
 
 ```sh
-git clone https://github.com/seu-usuario/validacao-clientes-api.git
+git clone https://github.com/iuri-medina/validacao-clientes-api.git
 cd validacao-clientes-api
 ```
 
