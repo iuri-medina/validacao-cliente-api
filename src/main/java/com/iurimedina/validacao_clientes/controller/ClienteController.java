@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +30,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("/clientes")
 @Tag(name = "Clientes", description = "Gerenciamento de clientes")
+@Validated
 public class ClienteController {
 
 	@Autowired
@@ -88,18 +91,12 @@ public class ClienteController {
                      content = @Content(mediaType = "application/json"))
     })
 	@PostMapping
-	public ResponseEntity<?> adicionar(@RequestBody ClienteRequestDto clienteDto) {
+	public ResponseEntity<?> adicionar(@Valid @RequestBody ClienteRequestDto clienteDto) {
 		
-		try {
-			Cliente cliente = clienteService.salvar(clienteDto);
-			return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
-		} 
-		catch (DataIntegrityViolationException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-		}
-		catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
+		
+		Cliente cliente = clienteService.salvar(clienteDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+		
 	}
 		
 	
@@ -117,9 +114,9 @@ public class ClienteController {
                      content = @Content(mediaType = "application/json"))
     })
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody ClienteRequestDto clienteDto) {
+	public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody ClienteRequestDto clienteDto) {
 		try {
-			Cliente cliente = new Cliente(clienteDto.getNome(), clienteDto.getCnpj(), clienteDto.isAtivo());
+			Cliente cliente = new Cliente(clienteDto.getNome(), clienteDto.getCnpj(), clienteDto.getAtivo());
 			cliente.setId(id);
 			Cliente clienteSalvo = clienteService.atualizar(cliente);
 			return ResponseEntity.ok(clienteSalvo);

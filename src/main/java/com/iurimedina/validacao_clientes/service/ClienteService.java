@@ -34,7 +34,7 @@ public class ClienteService {
 			throw new DataIntegrityViolationException("Já existe um cliente com o mesmo CNPJ: " + cnpjTratado);
 		}
 		
-		Cliente cliente = new Cliente(clienteDto.getNome(), cnpjTratado, clienteDto.isAtivo());
+		Cliente cliente = new Cliente(clienteDto.getNome(), cnpjTratado, clienteDto.getAtivo());
 
 		String chave = UUID.randomUUID().toString(); //gera a chave aleatoriamente para o cliente
 		cliente.setChave(chave);
