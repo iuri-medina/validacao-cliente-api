@@ -5,7 +5,7 @@ Este projeto é uma API REST desenvolvida com **Spring Boot**, projetada para **
 ##  Tecnologias Utilizadas
 
 - **Java 17**
-- **Spring Boot 3** (Spring Web, Spring Data JPA, Validation)
+- **Spring Boot 3** (Spring Web, Spring Data JPA, Validation, Security)
 - **MySQL** (Banco de dados relacional)
 - **Docker & Docker Compose**
 - **Swagger (Springdoc OpenAPI)** (Documentação interativa da API)
@@ -18,6 +18,7 @@ Este projeto é uma API REST desenvolvida com **Spring Boot**, projetada para **
 - **Validação de chave** na API para garantir autenticidade
 - **Validação de CNPJ** para evitar duplicidade
 - **Documentação com Swagger** para facilitar integração
+- **Autenticação Http Basic via Spring Security** 
 - **Execução via Docker** para facilidade de deploy
 
 ##  Como Rodar o Projeto
@@ -70,9 +71,20 @@ A documentação Swagger pode ser acessada em:
 http://localhost:8080/swagger-ui.html
 ```
 
+## Autenticação
+
+O usuario e a senha estão configurados na classe ```SecurityConfig```.
+
+Usuario padrão: ```iurimedina```
+
+Senha padrão: ```validacao-cliente```
+
+Devem ser passados no cabeçalho das requisições no endpoint ```/clientes```
+
+No postman, é preciso definir usuario e senha na aba Authorization. (Automaticamente convertido para Base64)
+
 ##  Melhorias Futuras
 
-- Implementação de autenticação com JWT
 - Paginação para listagem de clientes
 - Testes unitários com JUnit
 
