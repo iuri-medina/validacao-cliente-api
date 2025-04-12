@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +28,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 
@@ -115,21 +113,11 @@ public class ClienteController {
     })
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody ClienteRequestDto clienteDto) {
-		try {
-			Cliente cliente = new Cliente(clienteDto.getNome(), clienteDto.getCnpj(), clienteDto.getAtivo());
-			cliente.setId(id);
-			Cliente clienteSalvo = clienteService.atualizar(cliente);
-			return ResponseEntity.ok(clienteSalvo);
-		} 
-		catch (EntityNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-		}
-		catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
-		catch (DataIntegrityViolationException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-		}
+
+		Cliente cliente = new Cliente(clienteDto.getNome(), clienteDto.getCnpj(), clienteDto.getAtivo());
+		cliente.setId(id);
+		Cliente clienteSalvo = clienteService.atualizar(cliente);
+		return ResponseEntity.ok(clienteSalvo);
 	}
 	
 	
@@ -141,13 +129,8 @@ public class ClienteController {
     })
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> excluir(@PathVariable Long id) {
-		
-		try {
-			clienteService.excluir(id);
-			return ResponseEntity.noContent().build();
-		} catch (EntityNotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
+		clienteService.excluir(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	
