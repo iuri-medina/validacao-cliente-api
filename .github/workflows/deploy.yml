@@ -22,7 +22,7 @@ jobs:
 
       - name: Deploy para EC2
         run: |
-          ssh ubuntu@3.133.132.217 << 'EOF'
+          ssh -T -i ~/.ssh/id_rsa ubuntu@3.133.132.217 << 'EOF'
             cd ~/validacao-cliente
             git pull origin main
             ./mvnw clean package -DskipTests
