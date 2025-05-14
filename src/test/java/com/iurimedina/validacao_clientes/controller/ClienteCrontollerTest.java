@@ -55,7 +55,7 @@ public class ClienteCrontollerTest {
 	@Test
 	void listarClientesTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/clientes")
-				.with(httpBasic("iurimedina", "validacao-cliente")))
+				.with(httpBasic("iuri-medina", "validacao@cliente")))
 			.andExpect(status().isOk());
 	}
 	
@@ -68,11 +68,13 @@ public class ClienteCrontollerTest {
 		System.out.println(clienteSalvo);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/clientes/" + clienteSalvo.getId())
-				.with(httpBasic("iurimedina", "validacao-cliente")))
+				.with(httpBasic("iuri-medina", "validacao@cliente")))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.nome").value("Cliente Teste"))
 			.andExpect(jsonPath("$.cnpj").value("68276522000154"))
-			.andExpect(jsonPath("$.ativo").value(true));	
+			.andExpect(jsonPath("$.ativo").value(true))	
+			.andExpect(jsonPath("$.chave").exists())
+			.andExpect(jsonPath("$.chave").isNotEmpty());
 	}
 		
 	@Test
@@ -84,7 +86,7 @@ public class ClienteCrontollerTest {
 		String json = objectMapper.writeValueAsString(clienteDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post("/clientes")
-				.with(httpBasic("iurimedina", "validacao-cliente"))
+				.with(httpBasic("iuri-medina", "validacao@cliente"))
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
@@ -109,7 +111,7 @@ public class ClienteCrontollerTest {
 		String json = objectMapper.writeValueAsString(clienteAtualizaDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put("/clientes/" + clienteSalvo.getId())
-				.with(httpBasic("iurimedina", "validacao-cliente"))
+				.with(httpBasic("iuri-medina", "validacao@cliente"))
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
@@ -130,7 +132,7 @@ public class ClienteCrontollerTest {
 		Cliente clienteSalvo = clienteService.salvar(clienteDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete("/clientes/" + clienteSalvo.getId())
-				.with(httpBasic("iurimedina", "validacao-cliente"))
+				.with(httpBasic("iuri-medina", "validacao@cliente"))
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isNoContent());
@@ -142,7 +144,7 @@ public class ClienteCrontollerTest {
 	    String json = objectMapper.writeValueAsString(clienteDto);
 
 	    mockMvc.perform(MockMvcRequestBuilders.post("/clientes")
-	            .with(httpBasic("iurimedina", "validacao-cliente"))
+	            .with(httpBasic("iuri-medina", "validacao@cliente"))
 	            .with(csrf())
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .content(json))
@@ -159,7 +161,7 @@ public class ClienteCrontollerTest {
 	    String json = objectMapper.writeValueAsString(clienteDto);
 
 	    mockMvc.perform(MockMvcRequestBuilders.post("/clientes")
-	            .with(httpBasic("iurimedina", "validacao-cliente"))
+	            .with(httpBasic("iuri-medina", "validacao@cliente"))
 	            .with(csrf())
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .content(json))
@@ -169,7 +171,7 @@ public class ClienteCrontollerTest {
 	@Test
 	void buscarClienteInexistenteTest() throws Exception {
 	    mockMvc.perform(MockMvcRequestBuilders.get("/clientes/9999")
-	            .with(httpBasic("iurimedina", "validacao-cliente")))
+	            .with(httpBasic("iuri-medina", "validacao@cliente")))
 	        .andExpect(status().isNotFound());
 	}
 
@@ -179,7 +181,7 @@ public class ClienteCrontollerTest {
 	    String json = objectMapper.writeValueAsString(clienteDto);
 
 	    mockMvc.perform(MockMvcRequestBuilders.put("/clientes/9999")
-	            .with(httpBasic("iurimedina", "validacao-cliente"))
+	            .with(httpBasic("iuri-medina", "validacao@cliente"))
 	            .with(csrf())
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .content(json))
@@ -189,7 +191,7 @@ public class ClienteCrontollerTest {
 	@Test
 	void removerClienteInexistenteTest() throws Exception {
 	    mockMvc.perform(MockMvcRequestBuilders.delete("/clientes/9999")
-	            .with(httpBasic("iurimedina", "validacao-cliente"))
+	            .with(httpBasic("iuri-medina", "validacao@cliente"))
 	            .with(csrf()))
 	        .andExpect(status().isNotFound());
 	}		

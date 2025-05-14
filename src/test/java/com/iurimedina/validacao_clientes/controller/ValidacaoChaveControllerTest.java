@@ -48,7 +48,7 @@ public class ValidacaoChaveControllerTest {
 		String json = objectMapper.writeValueAsString(validacaoDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post("/validacao-chave-cliente")
-				.with(httpBasic("importadoroferta", "importador-oferta"))
+				.with(httpBasic("importador-oferta", "importador@oferta"))
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
@@ -66,7 +66,7 @@ public class ValidacaoChaveControllerTest {
 		String json = objectMapper.writeValueAsString(validacaoDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post("/validacao-chave-cliente")
-				.with(httpBasic("importadoroferta", "importador-oferta"))
+				.with(httpBasic("importador-oferta", "importador@oferta"))
 				.with(csrf())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
@@ -84,7 +84,7 @@ public class ValidacaoChaveControllerTest {
 	    String json = objectMapper.writeValueAsString(validacaoDto);
 
 	    mockMvc.perform(MockMvcRequestBuilders.post("/validacao-chave-cliente")
-	            .with(httpBasic("importadoroferta", "importador-oferta"))
+	            .with(httpBasic("importador-oferta", "importador@oferta"))
 	            .with(csrf())
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .content(json))
@@ -102,7 +102,7 @@ public class ValidacaoChaveControllerTest {
 	    String json = objectMapper.writeValueAsString(validacaoDto);
 
 	    mockMvc.perform(MockMvcRequestBuilders.post("/validacao-chave-cliente")
-	            .with(httpBasic("importadoroferta", "importador-oferta"))
+	            .with(httpBasic("importador-oferta", "importador@oferta"))
 	            .with(csrf())
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .content(json))
@@ -115,7 +115,7 @@ public class ValidacaoChaveControllerTest {
 	    String json = objectMapper.writeValueAsString(validacaoDto);
 
 	    mockMvc.perform(MockMvcRequestBuilders.post("/validacao-chave-cliente")
-	            .with(httpBasic("importadoroferta", "importador-oferta"))
+	            .with(httpBasic("importador-oferta", "importador@oferta"))
 	            .with(csrf())
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .content(json))

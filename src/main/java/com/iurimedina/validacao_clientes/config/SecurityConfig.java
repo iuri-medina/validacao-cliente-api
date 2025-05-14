@@ -37,14 +37,14 @@ public class SecurityConfig {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         
         UserDetails admin = User.builder()
-            .username("iurimedina")
-            .password(encoder.encode("validacao-cliente")) 
+            .username("iuri-medina")
+            .password(encoder.encode("validacao@cliente")) 
             .roles("ADMIN")
             .build();
         
         UserDetails validacao = User.builder()
-        		.username("importadoroferta")
-        		.password(encoder.encode("importador-oferta"))
+        		.username("importador-oferta")
+        		.password(encoder.encode("importador@oferta"))
         		.roles("VALIDACAO")
         		.build();
         
