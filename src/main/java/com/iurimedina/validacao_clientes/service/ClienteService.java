@@ -45,6 +45,10 @@ public class ClienteService {
 	public Cliente atualizar(Cliente cliente) {
 		Optional<Cliente> clienteAtual = clienteRepository.findById(cliente.getId());
 		
+		if (clienteAtual.isEmpty()) {
+	        throw new EntityNotFoundException("Cliente não encontrado.");
+	    }
+		
 		String novoCnpj = tratarCnpj(cliente.getCnpj());
 		
 		if(!validarCnpj(novoCnpj)) {
@@ -55,13 +59,11 @@ public class ClienteService {
 			throw new DataIntegrityViolationException("CNPJ já cadastrado em outro cliente.");
 		}
 		
-		if(clienteAtual.isPresent()) {
-			BeanUtils.copyProperties(cliente, clienteAtual.get(), "id", "chave");
+		BeanUtils.copyProperties(cliente, clienteAtual.get(), "id", "chave");
 			
-			Cliente clienteSalvo = clienteRepository.save(clienteAtual.get());
-			return clienteSalvo;
-		}
-		throw new EntityNotFoundException("Cliente não encontrado.");
+		Cliente clienteSalvo = clienteRepository.save(clienteAtual.get());
+		return clienteSalvo;
+		
 	}
 	
 	public void excluir(Long id) {
@@ -73,6 +75,7 @@ public class ClienteService {
 		
 		clienteRepository.deleteById(id);
 	}
+	
 	
 	public String tratarCnpj(String cnpj) {
 		cnpj = cnpj.replaceAll("[^0-9]", "");

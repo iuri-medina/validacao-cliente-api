@@ -21,8 +21,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/clientes/**").authenticated()
+        	.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/clientes/**").hasRole("ADMIN")
+                .requestMatchers("/validacao-chave-cliente/**").hasRole("VALIDACAO")
                 .anyRequest().permitAll()
             )
             .httpBasic(Customizer.withDefaults())
@@ -35,12 +36,18 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         
-        UserDetails user = User.builder()
+        UserDetails admin = User.builder()
             .username("iurimedina")
-            .password(encoder.encode("validacao-cliente")) // Codifica a senha
+            .password(encoder.encode("validacao-cliente")) 
             .roles("ADMIN")
             .build();
         
-        return new InMemoryUserDetailsManager(user);
+        UserDetails validacao = User.builder()
+        		.username("importadoroferta")
+        		.password(encoder.encode("importador-oferta"))
+        		.roles("VALIDACAO")
+        		.build();
+        
+        return new InMemoryUserDetailsManager(admin, validacao);
     }
 }

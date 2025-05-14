@@ -90,8 +90,7 @@ public class ClienteController {
     })
 	@PostMapping
 	public ResponseEntity<?> adicionar(@Valid @RequestBody ClienteRequestDto clienteDto) {
-		
-		
+
 		Cliente cliente = clienteService.salvar(clienteDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
 		
